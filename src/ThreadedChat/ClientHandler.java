@@ -9,26 +9,32 @@ public class ClientHandler extends Thread {
 		    final BufferedReader in; 
 		    final PrintWriter out;
 			
-public ClientHandler(Socket socket, BufferedReader reader, PrintWriter writer) throws IOException {
+public ClientHandler(Socket socket, BufferedReader reader, PrintWriter writer){
 			this.socket = socket;
-			this.in = reader;
-			this.out = writer;
+			in = reader;
+			out = writer;
 			//start();
 			}
+
 			@Override
-			public void run() {
-				
+			public void run()
+		{
+		 try {
 			while(true) {
-				try {
-				
-					//offer client to start conversation
+				try {	
+				//offer client to start conversation
 				out.println("Type in your message here...");
 				//get answer from client
 				in.readLine();
-				}
-			catch(Exception e){
-				System.out.print("Error!");
+				}finally
+				{
+					in.close();
+					out.close();}
 			}
+		 
+				
+			}catch(Exception e) {
+				System.out.println("Error!");
 			}
 		}
 

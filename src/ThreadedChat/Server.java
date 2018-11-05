@@ -9,18 +9,18 @@ public class Server {
 	private static BufferedReader in;
 	private static PrintWriter out;
 	
-	public static void main(String[] args) throws IOException{ 
-			
+	public static void main(String[] args) throws IOException{
+		
+		ss = new ServerSocket(6666);
+		System.out.println("Server is waiting for the connection...");
+		
 		while(true) {
-			Socket s = null;
+			Socket client = null;
 		
 			try{
-			
-			ss = new ServerSocket(6665);
-			System.out.println("Server is waiting for the connection...");
-			//accept connection from a client
+				//wait connection from a client
 			client = ss.accept();
-			System.out.println("The connection was successfully set.");
+			System.out.println("The connection was successfully established.");
 			
 			
 			in = new BufferedReader(new InputStreamReader(client.getInputStream()));
@@ -29,13 +29,13 @@ public class Server {
 			System.out.println("Creating new thread for the new client");
 			
 			//create new thread object 
-			Thread thr = new ClientHandler(s, in, out);
+			Thread thr = new ClientHandler(client, in, out);
 			
 			thr.start();
-			
-			}catch(Exception e){
+			}
+			catch (Exception e){
 			client.close();
-			e.printStackTrace();}
+			e.printStackTrace(); }
 		}
 	}
 }

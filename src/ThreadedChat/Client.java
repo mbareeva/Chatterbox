@@ -15,7 +15,7 @@ public class Client {
 		try{  
 			
 			//set the connection with server on port 6665
-		clientSocket = new Socket("127.0.0.1", 6665);
+		clientSocket = new Socket("127.0.0.1", 6666);
 		//hostname - ip of PC to connect to
 		
 		//read from keyboard, read from and write to server
