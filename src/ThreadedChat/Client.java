@@ -6,10 +6,8 @@ import java.io.*;
 public class Client {
 	
 	private static Socket socket;
-	//private static BufferedReader reader;
-	//private static BufferedReader in;
-//	private static PrintWriter out;
-	private int port;
+	private static BufferedReader in;
+	private static PrintWriter out;
 	private String name;
 	private String serverName;
 	
@@ -22,8 +20,7 @@ public class Client {
 		this.name = name;
 		socket = new Socket("localhost", port);
 		//reader = new BufferedReader(new InputStreamReader(System.in));
-		//in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-		//out = new PrintWriter(clientSocket.getOutputStream());
+		
 	}
 	
 	public static void main(String[] args) throws UnknownHostException, IOException{ 
@@ -34,6 +31,18 @@ public class Client {
 	public void startConnection() {
 			try {
 				System.out.println("Insert you message here: ");
+				
+				//exchange the information
+				in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				out = new PrintWriter(socket.getOutputStream());
+				//how does it understands that I need the name of a client?, 
+				//just through socket.getOutputStream??
+				out.println(name + "\n");
+				
+				//receive the name 
+				//same: how does it filters and give us exactly the name of server?
+				serverName = in.readLine();
+				
 				//instantiating threads - reading and writing to streams
 					new ReadMsg(socket, serverName).start();
 					new WriteMsg(socket).start();
