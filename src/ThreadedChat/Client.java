@@ -38,6 +38,7 @@ public class Client {
 				//how does it understands that I need the name of a client?, 
 				//just through socket.getOutputStream??
 				out.println(name + "\n");
+				out.flush();
 				
 				//receive the name 
 				//same: how does it filters and give us exactly the name of server?

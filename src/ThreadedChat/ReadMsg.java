@@ -9,7 +9,8 @@ public class ReadMsg extends Thread{
 	BufferedReader in;
 
 		public ReadMsg(Socket socket, String recipient) {
-				this.socket = new Socket();
+			//why dont we have to create new Socket()?
+				this.socket = socket;
 				this.recipient = recipient;
 		}		
 	/*
@@ -21,11 +22,10 @@ public class ReadMsg extends Thread{
 		try {
 			while(true) {
 				in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-				if((input = in.readLine()) != null) {
-					System.out.println(recipient + ": " + input + "\n");
-				}
+				input = in.readLine();
+				System.out.println(recipient + ": " + input + "\n");
 			}
 		}catch(Exception e) {
-			System.out.println("Error!");}
+			System.out.println(e);}
 	}
 }
