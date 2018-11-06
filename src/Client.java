@@ -1,4 +1,8 @@
 import java.net.Socket;
+
+import ThreadedChat.ReadMsg;
+import ThreadedChat.WriteMsg;
+
 import java.io.*;
 
 public class Client {
@@ -10,7 +14,7 @@ public class Client {
 	
 	public static void main(String[] args){ 
 	
-	try {
+	
 		try{  
 			
 			//ask server for access the connection
@@ -23,20 +27,15 @@ public class Client {
 		out = new PrintWriter(clientSocket.getOutputStream());
 		System.out.println("Insert you message here: ");
 		
-		String receiveMsg,sendMsg;
-			while(true) {
-				sendMsg = reader.readLine();
-				out.println(sendMsg);//send to server
-				out.flush();
-				if((receiveMsg = in.readLine()) != null) {
-				System.out.println("Server: " + receiveMsg);
-				}
-			}	
-			
-		}finally {
-		in.close();
-		out.close();
-		clientSocket.close();}
-	}catch(Exception e){System.out.println(e);}  
-		}  
+		try {
+			new ReadMsg().start();
+			new WriteMsg().start();
+		}catch(Exception e)
+		{
+		System.out.println(e);} 			
+		
+	}catch(Exception e){
+		System.out.println(e);}  
+	}
+		
 }
